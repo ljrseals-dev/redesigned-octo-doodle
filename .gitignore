@@ -1,0 +1,16 @@
+build/
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+.DS_Store
+.idea/
+.vscode/
+*.user
+CMakeCache.txt
+CMakeFiles/
+compile_commands.json
+*.vst3
+Standalone/
