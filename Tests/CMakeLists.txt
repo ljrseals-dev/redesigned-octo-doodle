@@ -46,3 +46,7 @@ add_executable(carrierfield_plugin_tests carrierfield_plugin_tests.cpp)
 target_link_libraries(carrierfield_plugin_tests PRIVATE cosmic_dsp)
 target_include_directories(carrierfield_plugin_tests PRIVATE ${CMAKE_SOURCE_DIR}/Source)
 add_test(NAME CarrierFieldPlugin COMMAND carrierfield_plugin_tests)
+
+add_executable(carrierfield_vst3_bridge_tests carrierfield_vst3_bridge_tests.cpp)
+target_include_directories(carrierfield_vst3_bridge_tests PRIVATE ${CMAKE_SOURCE_DIR}/Source)
+add_test(NAME CarrierFieldVst3Bridge COMMAND carrierfield_vst3_bridge_tests)

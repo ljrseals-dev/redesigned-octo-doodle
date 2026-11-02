@@ -44,6 +44,9 @@ jobs:
           g++ -std=c++20 -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=undefined \
               -ISource Tests/carrierfield_plugin_tests.cpp -o plugin_core_san
           ./plugin_core_san
+          g++ -std=c++17 -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=undefined \
+              Tests/carrierfield_vst3_bridge_tests.cpp -o vst3_bridge_san
+          ./vst3_bridge_san
 
   demo-render:
     name: Render demo drone
@@ -79,3 +82,29 @@ jobs:
         run: cmake -S . -B build-juce -DJUCE_PATH="$RUNNER_TEMP/JUCE" -DCOSMIC_BUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release
       - name: Build CarrierField (VST3 + Standalone)
         run: cmake --build build-juce --target CarrierField_VST3 CarrierField_Standalone --parallel
+
+  vst3-sdk:
+    name: VST3 SDK build (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    continue-on-error: true   # first compile against the real Steinberg SDK has not been run yet; promote to required once green
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch Steinberg VST3 SDK
+        shell: bash
+        run: git clone --recursive --depth 1 https://github.com/steinbergmedia/vst3sdk.git "$RUNNER_TEMP/vst3sdk"
+      - name: Configure
+        shell: bash
+        run: cmake -S vst3 -B build-vst3 -DVST3_SDK_ROOT="$RUNNER_TEMP/vst3sdk" -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build build-vst3 --config Release --parallel
+      - name: Validate with the SDK validator
+        shell: bash
+        run: |
+          VAL=$(find build-vst3 -type f \( -name validator -o -name validator.exe \) | head -n1)
+          PLUG=$(find build-vst3 -name "CarrierFieldVst3.vst3" | head -n1)
+          echo "validator: $VAL"; echo "plugin: $PLUG"
+          "$VAL" "$PLUG"

@@ -1,0 +1,34 @@
+{
+  "Name": "CarrierField",
+  "Version": "1.0.0.1",
+  "Factory Info": {
+    "Vendor": "Cosmic DSP",
+    "URL": "https://github.com/ljrseals-dev",
+    "E-Mail": "mailto:contact@example.com",
+    "Flags": { "Unicode": true, "Classes Discardable": false, "Component Non Discardable": false }
+  },
+  "Classes": [
+    {
+      "CID": "E84E60FC9EE7BD120A6A25A8619202D8",
+      "Category": "Audio Module Class",
+      "Name": "CarrierField",
+      "Vendor": "Cosmic DSP",
+      "Version": "1.0.0.1",
+      "SDKVersion": "VST 3.7",
+      "Sub Categories": [ "Instrument", "Synth" ],
+      "Class Flags": 1,
+      "Cardinality": 2147483647
+    },
+    {
+      "CID": "701E4C5373E4F7827CEFE9B04C8BBFDA",
+      "Category": "Component Controller Class",
+      "Name": "CarrierField Controller",
+      "Vendor": "Cosmic DSP",
+      "Version": "1.0.0.1",
+      "SDKVersion": "VST 3.7",
+      "Sub Categories": [],
+      "Class Flags": 0,
+      "Cardinality": 2147483647
+    }
+  ]
+}
